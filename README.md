@@ -27,6 +27,5 @@ convert image.ppm tmp.png
 Now, there should be file called "tmp.png" in the root folder. (pngs are usually more accesible to view)
 
 
-
 Sources:
 [_Ray Tracing in One Weekend_](https://raytracing.github.io/books/RayTracingInOneWeekend.html)
