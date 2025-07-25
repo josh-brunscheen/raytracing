@@ -1,11 +1,6 @@
 # raytracing
 First attempt at a raytracing project in C++.
 
-NOTE: This project was meant to be more of a robust attempt at getting started with raytracing.
-That being said, I did not use CMake, but I recommend that you should.
-
-ANOTHER NOTE: This project closely follows the book "Ray Tracing in One Weekend" (cited below), with some minor deviations in terms of setting up and running this code.
-
 I used the commands below for compiling, running, and then converting the produced image to a png.
 
 First run this:
