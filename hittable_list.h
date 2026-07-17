@@ -6,6 +6,7 @@
 #include "hittable.h"
 #include "ray.h"
 #include "interval.h"
+#include "sphere.h"
 
 #include <vector>
 
@@ -19,6 +20,12 @@ class hittable_list : public hittable {
 
   void add(shared_ptr<hittable> object) {
     objects.push_back(object);
+  }
+
+  void add(std::vector<shared_ptr<sphere>> objectCollection) {
+    for (unsigned int i = 0; i < objectCollection.size(); i++) {
+      add(objectCollection[i]);
+    }
   }
 
   bool hit(const ray& r, interval ray_t, hit_record& rec) const override {

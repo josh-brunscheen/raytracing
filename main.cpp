@@ -1,25 +1,30 @@
 #include "rtweekend.h"
-
 #include "camera.h"
 #include "hittable.h"
 #include "hittable_list.h"
 #include "sphere.h"
 #include "material.h"
+#include "plane.h"
 
 #include <cmath>
 
 int main() {
   hittable_list world;
 
+  Plane testPlane;
+  world.add(testPlane.getPoints());
 
+
+  // SINE FUNCTION Below
   //auto color_material = make_shared<lambertian>(color(0.203125, 0.7421875, 0.92578125));
-  for (int x = -5; x < 5; x++) {
-    for (int y = -4; y < 4; y++) {
-      // auto color_material = make_shared<lambertian>(color(std::abs(x/7), std::abs(y/4), std::abs((x + y) / 15)));
-      auto color_material = make_shared<metal>(color((x + 10) / double(20), (x + 10) / double(20), 0.9), 0.0);
-      world.add(make_shared<sphere>(point3(x, y, std::sin(x + y)), 0.5, color_material));
-    }
-  }
+  // for (int x = -5; x < 5; x++) {
+  //   for (int y = -4; y < 4; y++) {
+  //     // auto color_material = make_shared<lambertian>(color(std::abs(x/7), std::abs(y/4), std::abs((x + y) / 15)));
+  //     auto color_material = make_shared<metal>(color((x + 10) / double(20), (x + 10) / double(20), 0.9), 0.0);
+      // world.add(make_shared<sphere>(point3(x, y, std::sin(x) + std::sin(y)), 0.5, color_material));
+  //   }
+  // }
+  // SINE FUNCTION END
 
   // for (int a = -11; a < 11; a++) {
   //   for (int b = -11; b < 11; b++) {
