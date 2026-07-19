@@ -1,7 +1,6 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-//INCLUDES HERE
 #include "ray.h"
 #include "color.h"
 #include "hittable.h"

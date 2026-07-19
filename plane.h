@@ -18,13 +18,13 @@ using std::shared_ptr;
 
 class Plane {
     public:
-        const int defaultXSpacing = 2;
-        const int defaultYSpacing = 2;
+        const int defaultXSpacing = 1;
+        const int defaultYSpacing = 1;
 
-        const int defaultXMin = -10;
-        const int defaultXMax = 10;
-        const int defaultYMin = -10;
-        const int defaultYMax = 10;
+        const int defaultXMin = -2;
+        const int defaultXMax = 2;
+        const int defaultYMin = -2;
+        const int defaultYMax = 2;
 
         Plane() {
             a = 0;
@@ -40,17 +40,33 @@ class Plane {
             yMin = defaultYMin;
             yMax = defaultYMax;
 
+            // Defaults to random color
+            auto albedo = color::random(0.5, 1);
+            auto fuzz = 0.25;
+            sphereMaterial = make_shared<metal>(albedo, fuzz);
+
             generatePoints();
         }
 
-        // Plane(int A, int B, int C, int D) : 
-        //     a(A), b(B), c(C), d(D),
-        //     xSpacing(defaultXSpacing), ySpacing(defaultYSpacing),
-        //     xMin(defaultXMin), xMax(defaultXMax),
-        //     yMin(defaultYMin), yMax(defaultYMax)
-        // {
-        //     generatePoints();
-        // } 
+        Plane(int A, int B, int C, int D, int xSpac, int ySpac, int xMinimum, int xMaximum,
+                int yMinimum, int yMaximum, shared_ptr<material> material) {
+            a = A;
+            b = B;
+            c = C;
+            d = D;
+            xSpacing = xSpac;
+            ySpacing = ySpac;
+
+            xMin = xMinimum;
+            xMax = xMaximum;
+
+            yMin = yMinimum;
+            yMax = yMaximum;
+
+            sphereMaterial = material;
+
+            generatePoints();
+        }
 
         std::vector<shared_ptr<sphere>> getPoints() {
             return points;
@@ -70,6 +86,8 @@ class Plane {
         int yMin;
         int yMax;
 
+        shared_ptr<material> sphereMaterial;
+
         std::vector<shared_ptr<sphere>> points;
 
         void generatePoints() {
@@ -78,13 +96,15 @@ class Plane {
                     double z = ((-a / c)*x) - ((b / c)*y) - (d/c);
                     point3 center(x, y, z);
 
-                    // Currently just supports metal material
-                    shared_ptr<material> sphereMaterial;
-                    auto albedo = color::random(0.5, 1);
-                    auto fuzz = 0.25;
-                    sphereMaterial = make_shared<metal>(albedo, fuzz);
 
-                    points.push_back(make_shared<sphere>(center, 0.2, sphereMaterial));
+                    // TODO: Delete this!!!
+                    // Currently just supports metal material
+                    // shared_ptr<material> sphereMaterial;
+                    // auto albedo = color::random(0.5, 1);
+                    // auto fuzz = 0.25;
+                    // sphereMaterial = make_shared<metal>(albedo, fuzz);
+
+                    points.push_back(make_shared<sphere>(center, 0.5, sphereMaterial));
                 }
             }
         }

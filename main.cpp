@@ -11,9 +11,16 @@
 int main() {
   hittable_list world;
 
-  Plane testPlane;
+  shared_ptr<material> sphereMaterial;
+  auto albedo = color::random(0.5, 1);
+  auto fuzz = 0.25;
+  sphereMaterial = make_shared<metal>(albedo, fuzz);
+
+  Plane testPlane(1, 0, 1, 0, 2, 2, -3, 3, -3, 3, sphereMaterial);
   world.add(testPlane.getPoints());
 
+  Plane testPlane2(0, 1, 1, 0, 2, 2, -3, 3, -3, 3, sphereMaterial);
+  world.add(testPlane2.getPoints());
 
   // SINE FUNCTION Below
   //auto color_material = make_shared<lambertian>(color(0.203125, 0.7421875, 0.92578125));
