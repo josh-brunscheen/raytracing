@@ -5,8 +5,13 @@
 #include "sphere.h"
 #include "material.h"
 #include "plane.h"
+#include "grapher.h"
 
 #include <cmath>
+
+double sineWave(double x, double y) {
+  return std::sin(x) + std::sin(y);
+}
 
 int main() {
   hittable_list world;
@@ -16,11 +21,8 @@ int main() {
   auto fuzz = 0.25;
   sphereMaterial = make_shared<metal>(albedo, fuzz);
 
-  Plane testPlane(1, 0, 1, 0, 2, 2, -3, 3, -3, 3, sphereMaterial);
-  world.add(testPlane.getPoints());
-
-  Plane testPlane2(0, 1, 1, 0, 2, 2, -3, 3, -3, 3, sphereMaterial);
-  world.add(testPlane2.getPoints());
+  Grapher testFunction(sineWave, 2, 2, -3, 3, -3, 3, sphereMaterial);
+  world.add(testFunction.getPoints());
 
   // SINE FUNCTION Below
   //auto color_material = make_shared<lambertian>(color(0.203125, 0.7421875, 0.92578125));

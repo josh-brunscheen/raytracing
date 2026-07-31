@@ -5,8 +5,8 @@
 // - cube
 // - 3d wave functions
 
-#ifndef PLANE_H
-#define PLANE_H
+#ifndef GRAPHER_H
+#define GRAPHER_H
 
 #include <vector>
 #include "material.h"
@@ -16,7 +16,11 @@
 using std::make_shared;
 using std::shared_ptr;
 
-class Plane {
+double defaultFunc(double x, double y) {
+    return 0.0; // Simple plane through the origin
+}
+
+class Grapher {
     public:
         const int defaultXSpacing = 1;
         const int defaultYSpacing = 1;
@@ -26,11 +30,9 @@ class Plane {
         const int defaultYMin = -2;
         const int defaultYMax = 2;
 
-        Plane() {
-            a = 0;
-            b = 0;
-            c = 1;
-            d = 0;
+        Grapher() {
+            mathFunc = defaultFunc; 
+
             xSpacing = defaultXSpacing;
             ySpacing = defaultYSpacing;
 
@@ -48,12 +50,10 @@ class Plane {
             generatePoints();
         }
 
-        Plane(int A, int B, int C, int D, int xSpac, int ySpac, int xMinimum, int xMaximum,
+        Grapher(double (*f)(double, double), int xSpac, int ySpac, int xMinimum, int xMaximum,
                 int yMinimum, int yMaximum, shared_ptr<material> material) {
-            a = A;
-            b = B;
-            c = C;
-            d = D;
+            mathFunc = f;
+            
             xSpacing = xSpac;
             ySpacing = ySpac;
 
@@ -73,13 +73,10 @@ class Plane {
         }
 
     private:
-        int a;
-        int b;
-        int c;
-        int d;
-
         int xSpacing;
         int ySpacing;
+
+        double (*mathFunc)(double, double);
 
         int xMin;
         int xMax;
@@ -91,11 +88,12 @@ class Plane {
         std::vector<shared_ptr<sphere>> points;
 
         void generatePoints() {
-            for (int x = xMin; x <= xMax; x += xSpacing) {
-                for (int y = yMin; y <= yMax; y += ySpacing) {
-                    double z = ((-a / c)*x) - ((b / c)*y) - (d/c);
+            for (double x = xMin; x <= xMax; x += xSpacing) {
+                for (double y = yMin; y <= yMax; y += ySpacing) {
+                    double z = mathFunc(x, y);
                     point3 center(x, y, z);
 
+                    // TODO: Allow user to change the size of the spheres
                     points.push_back(make_shared<sphere>(center, 0.5, sphereMaterial));
                 }
             }
